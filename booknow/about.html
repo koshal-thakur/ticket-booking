@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Booking Website</title>
+    <link rel="stylesheet" href="../src/assets/css/styles.css">
+    <link rel="stylesheet" href="../src/assets/css/responsive.css">
+    <style>
+        /* About Page Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #35424a, #e8491d);
+            color: #ffffff;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+            background: #35424a;
+            color: #ffffff;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 5px 10px;
+            transition: background 0.3s;
+        }
+
+        nav ul li a:hover {
+            background: #e8491d;
+            border-radius: 5px;
+        }
+
+        main {
+            padding: 50px 10%;
+            background: #ffffff;
+            color: #333;
+        }
+
+        main h2 {
+            font-size: 28px;
+            color: #35424a;
+            margin-bottom: 20px;
+        }
+
+        main p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        main ul {
+            list-style: disc;
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        main ul li {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background: #35424a;
+            color: #ffffff;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>About Us</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="booking.html">Booking</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Welcome to Our Booking Platform</h2>
+            <p>We provide a comprehensive platform for booking trains, buses, hotels, and restaurants. Our goal is to make your travel planning as seamless as possible.</p>
+        </section>
+        <section>
+            <h2>Our Services</h2>
+            <ul>
+                <li>Train Bookings - <span id="trainPrice">₹0</span></li>
+                <li>Bus Reservations - <span id="busPrice">₹0</span></li>
+                <li>Hotel Accommodations - <span id="hotelPrice">₹0</span></li>
+                <li>Restaurant Reservations - <span id="restaurantPrice">₹0</span></li>
+            </ul>
+        </section>
+        <section>
+            <h2>Why Choose Us?</h2>
+            <p>We offer competitive prices, a user-friendly interface, and 24/7 customer support to assist you with all your travel needs.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Booking Website(Koshal Thakur). All rights reserved.</p>
+    </footer>
+    <script src="../src/assets/js/main.js"></script>
+    <script>
+        const userPrices = {
+            "user1@example.com": {
+                train: 1200,
+                bus: 500,
+                hotel: 4000,
+                restaurant: 800
+            },
+            "user2@example.com": {
+                train: 1500,
+                bus: 600,
+                hotel: 4500,
+                restaurant: 1000
+            }
+        };
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const loggedInUser = localStorage.getItem("loggedInUser"); // Get the logged-in user's email
+            const prices = userPrices[loggedInUser]; // Fetch prices for the logged-in user
+
+            if (prices) {
+                // Update prices dynamically
+                document.getElementById("trainPrice").textContent = `₹${prices.train}`;
+                document.getElementById("busPrice").textContent = `₹${prices.bus}`;
+                document.getElementById("hotelPrice").textContent = `₹${prices.hotel}`;
+                document.getElementById("restaurantPrice").textContent = `₹${prices.restaurant}`;
+            } else {
+                console.warn("No prices found for the logged-in user.");
+            }
+        });
+    </script>
+</body>
+</html>

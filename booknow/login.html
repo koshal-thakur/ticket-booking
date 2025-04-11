@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Responsive Booking Website</title>
+    <link rel="stylesheet" href="../src/assets/css/styles.css">
+    <link rel="stylesheet" href="../src/assets/css/responsive.css">
+    <style>
+        /* General Styles */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(to right, #35424a, #e8491d);
+            color: #ffffff;
+        }
+
+        .container {
+            background: #ffffff;
+            color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #35424a;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background: #e8491d;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #35424a;
+        }
+
+        p {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        p a {
+            color: #e8491d;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+
+        /* Media Query for Smaller Screens */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+
+            .form-group input {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            p {
+                font-size: 12px;
+            }
+        }
+
+        /* Media Query for Extra Small Screens */
+        @media (max-width: 400px) {
+            h1 {
+                font-size: 20px;
+            }
+
+            button {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+
+            .form-group input {
+                font-size: 12px;
+                padding: 6px;
+            }
+
+            p {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="loginContainer">
+        <h1>Login</h1>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit">Login</button>
+            <p>Don't have an account? <a href="register.html">Register here</a></p>
+        </form>
+    </div>
+    <div class="container" id="welcomeContainer" style="display: none;">
+        <h1>Welcome, <span id="username"></span>!</h1>
+        <button id="bookNowButton">Book Now</button>
+        <button id="logoutButton">Logout</button>
+    </div>
+    <script>
+        // Handle form submission
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form from submitting
+
+            // Get email and password values
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Retrieve stored user details
+            const storedEmail = localStorage.getItem('email');
+            const storedPassword = localStorage.getItem('password');
+            const storedUsername = localStorage.getItem('username');
+
+            if (email === storedEmail && password === storedPassword) {
+                // Store login state in localStorage
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('loggedInUser', storedUsername);
+
+                // Redirect to the home page
+                window.location.href = 'index.html';
+            } else {
+                alert('Invalid email or password!');
+            }
+        });
+
+        
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            alert('You have been logged out!');
+            document.getElementById('loginContainer').style.display = 'block';
+            document.getElementById('welcomeContainer').style.display = 'none';
+        });
+
+        
+        document.getElementById('bookNowButton').addEventListener('click', function() {
+            alert('Redirecting to the booking page...');
+            
+            window.location.href = 'booking.html';
+        });
+    </script>
+</body>
+</html>

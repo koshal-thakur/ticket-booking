@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background: #2c3e50;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .service {
+            margin-bottom: 20px;
+        }
+
+        .service h2 {
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+
+        .service table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .service table th,
+        .service table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .service table th {
+            background: #2c3e50;
+            color: #fff;
+        }
+
+        .offer {
+            background: #e74c3c;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Service Details</h1>
+        <div id="timer" style="position: absolute; top: 20px; right: 20px; background: #e74c3c; color: #fff; padding: 10px 15px; border-radius: 5px; font-size: 16px;">
+            Next Update In: <span id="countdown">10</span>s
+        </div>
+    </header>
+    <div class="container">
+        <div id="services"></div>
+    </div>
+    <script>
+        const serviceData = {
+            train: {
+                name: "Train Services",
+                offer: "Get 10% off on all train bookings!",
+                details: [
+                    { name: "Rajdhani Express", date: "2025-04-10", departure: "10:00 AM", arrival: "6:00 PM" },
+                    { name: "Shatabdi Express", date: "2025-04-12", departure: "9:00 AM", arrival: "3:00 PM" }
+                ]
+            },
+            bus: {
+                name: "Bus Services",
+                offer: "Flat ₹50 off on bus tickets!",
+                details: [
+                    { name: "Volvo AC", date: "2025-04-11", departure: "10:30 AM", arrival: "2:30 PM" },
+                    { name: "Sleeper Bus", date: "2025-04-13", departure: "9:30 AM", arrival: "1:30 PM" }
+                ]
+            },
+            hotel: {
+                name: "Hotel Services",
+                offer: "20% off on hotel bookings!",
+                details: [
+                    { name: "The Taj", date: "2025-04-10", time: "Check-in: 12:00 PM" },
+                    { name: "Oberoi", date: "2025-04-12", time: "Check-in: 2:00 PM" }
+                ]
+            },
+            restaurant: {
+                name: "Restaurant Services",
+                offer: "Free dessert with every meal!",
+                details: [
+                    { name: "Barbeque Nation", date: "2025-04-10", time: "12:00 PM" },
+                    { name: "Domino's", date: "2025-04-12", time: "1:00 PM" }
+                ]
+            }
+        };
+
+        function generateRandomPrices() {
+            return {
+                train: Math.floor(Math.random() * 500) + 1000, // Random price between 1000 and 1500
+                bus: Math.floor(Math.random() * 200) + 400,   // Random price between 400 and 600
+                hotel: Math.floor(Math.random() * 2000) + 3000, // Random price between 3000 and 5000
+                restaurant: Math.floor(Math.random() * 300) + 500 // Random price between 500 and 800
+            };
+        }
+
+        function renderServices(prices) {
+            const servicesContainer = document.getElementById("services");
+            servicesContainer.innerHTML = ""; // Clear previous content
+
+            for (const key in serviceData) {
+                const service = serviceData[key];
+
+                // Create service section
+                const serviceSection = document.createElement("div");
+                serviceSection.classList.add("service");
+
+                // Add service name
+                const serviceName = document.createElement("h2");
+                serviceName.textContent = service.name;
+                serviceSection.appendChild(serviceName);
+
+                // Add offer
+                const serviceOffer = document.createElement("div");
+                serviceOffer.classList.add("offer");
+                serviceOffer.textContent = service.offer;
+                serviceSection.appendChild(serviceOffer);
+
+                // Add table
+                const table = document.createElement("table");
+                const thead = document.createElement("thead");
+
+                if (key === "train" || key === "bus") {
+                    thead.innerHTML = `
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Date</th>
+                            <th>Departure</th>
+                            <th>Arrival</th>
+                        </tr>
+                    `;
+                } else {
+                    thead.innerHTML = `
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                        </tr>
+                    `;
+                }
+                table.appendChild(thead);
+
+                const tbody = document.createElement("tbody");
+                service.details.forEach(detail => {
+                    const row = document.createElement("tr");
+
+                    if (key === "train" || key === "bus") {
+                        row.innerHTML = `
+                            <td>${detail.name}</td>
+                            <td>₹${prices[key]}</td>
+                            <td>${detail.date}</td>
+                            <td>${detail.departure}</td>
+                            <td>${detail.arrival}</td>
+                        `;
+                    } else {
+                        row.innerHTML = `
+                            <td>${detail.name}</td>
+                            <td>₹${prices[key]}</td>
+                            <td>${detail.date}</td>
+                            <td>${detail.time}</td>
+                        `;
+                    }
+                    tbody.appendChild(row);
+                });
+                table.appendChild(tbody);
+
+                serviceSection.appendChild(table);
+                servicesContainer.appendChild(serviceSection);
+            }
+        }
+
+        function updatePrices() {
+            const newPrices = generateRandomPrices();
+            renderServices(newPrices);
+        }
+
+        let countdown = 10;
+
+        function startTimer() {
+            const countdownElement = document.getElementById("countdown");
+
+            // Update the countdown every second
+            const timerInterval = setInterval(() => {
+                countdown -= 1;
+                countdownElement.textContent = countdown;
+
+                // Reset the countdown when it reaches 0
+                if (countdown === 0) {
+                    countdown = 10; // Reset countdown
+                    updatePrices(); // Update prices
+                }
+            }, 1000);
+        }
+
+        // Initial render and start the timer
+        updatePrices();
+        startTimer();
+    </script>
+</body>
+</html>

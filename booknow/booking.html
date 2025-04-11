@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #35424a, #e8491d);
+            color: #ffffff;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+            background: #35424a;
+            color: #ffffff;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #booking-form, #ticket {
+            background: #ffffff;
+            color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 20px;
+        }
+
+        #booking-form h2, #ticket h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #35424a;
+        }
+
+        #form-booking label, #ticket p {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        #form-booking input, #form-booking select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        #form-booking button, #downloadTicket {
+            background: #e8491d;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        #form-booking button:hover, #downloadTicket:hover {
+            background: #35424a;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background: #35424a;
+            color: #ffffff;
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #booking-form, #ticket {
+                padding: 20px;
+            }
+
+            header h1 {
+                font-size: 28px;
+            }
+
+            #form-booking button, #downloadTicket {
+                font-size: 14px;
+            }
+
+            .go-home {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #booking-form, #ticket {
+                padding: 15px;
+            }
+
+            header h1 {
+                font-size: 24px;
+            }
+
+            #form-booking button, #downloadTicket {
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+
+            .go-home {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+        }
+
+        .go-home {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background: #e8491d;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .go-home:hover {
+            background: #35424a;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Book Your Travel and Stay</h1>
+    </header>
+
+    <!-- Go to Home Page Button -->
+    <a href="index.html" class="go-home">Go to Home Page</a>
+
+    <main>
+        <!-- Booking Form -->
+        <section id="booking-form">
+            <h2>Make a Booking</h2>
+            <form id="form-booking">
+                <label for="travel-type">Select Type:</label>
+                <select id="travel-type" name="travel-type" required>
+                    <option value="">Select</option>
+                    <option value="train">Train</option>
+                    <option value="bus">Bus</option>
+                    <option value="hotel">Hotel</option>
+                    <option value="restaurant">Restaurant</option>
+                </select>
+
+                <label for="destination">Select Destination:</label>
+                <select id="destination" name="destination" required>
+                    <option value="">Select Destination</option>
+                </select>
+
+                <label for="name">Select Name:</label>
+                <select id="name" name="name" required>
+                    <option value="">Select Name</option>
+                </select>
+
+                <label for="date">Date:</label>
+                <select id="date" name="date" required>
+                    <option value="">Select Date</option>
+                </select>
+
+                <label for="time">Time:</label>
+                <select id="time" name="time" required>
+                    <option value="">Select Time</option>
+                </select>
+
+                <label for="boarding-point" id="boarding-point-label">Select Boarding Point/Station:</label>
+                <select id="boarding-point" name="boarding-point" required>
+                    <option value="">Select Boarding Point</option>
+                </select>
+
+                <label for="person-name">Name:</label>
+                <input type="text" id="person-name" name="person-name" placeholder="Enter your name" required>
+
+                <label for="person-age">Age:</label>
+                <input type="number" id="person-age" name="person-age" placeholder="Enter your age" required>
+
+                <label for="person-gender">Gender:</label>
+                <select id="person-gender" name="person-gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <button type="submit">Book Now</button>
+            </form>
+        </section>
+
+        <!-- Ticket Confirmation -->
+        <section id="ticket" style="display: none;">
+            <h2>Booking Confirmation</h2>
+            <p><strong>Travel Type:</strong> <span id="ticket-travel-type"></span></p>
+            <p><strong>Destination:</strong> <span id="ticket-destination"></span></p>
+            <p><strong>Name:</strong> <span id="ticket-name"></span></p>
+            <p><strong>Date:</strong> <span id="ticket-date"></span></p>
+            <p><strong>Time:</strong> <span id="ticket-time"></span></p>
+            <p><strong>Boarding Point:</strong> <span id="ticket-boarding-point"></span></p>
+            <p><strong>Name:</strong> <span id="ticket-person-name"></span></p>
+            <p><strong>Age:</strong> <span id="ticket-person-age"></span></p>
+            <p><strong>Gender:</strong> <span id="ticket-person-gender"></span></p>
+            <p><strong>Price:</strong> <span id="ticket-price"></span></p>
+            <p id="bookingMessage" style="color: green; font-weight: bold; display: none;">Your ticket is confirmed!</p>
+            <button id="payNow" style="background: #e8491d; color: #ffffff; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Pay Now</button>
+            <button id="downloadTicket" style="display: none; background: #35424a; color: #ffffff; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Download Ticket</button>
+        </section>
+    </main>
+
+    <!-- Remove or comment out the payment modal -->
+    
+    <div id="paymentModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: #ffffff; padding: 20px; border-radius: 10px; width: 90%; max-width: 400px; text-align: center;">
+            <h2>Payment Gateway</h2>
+            <p>Amount to Pay: <strong id="paymentAmount"></strong></p>
+
+            <!-- Card Payment Form -->
+            <form id="cardPaymentForm">
+                <label for="cardNumber">Card Number:</label>
+                <input type="text" id="cardNumber" placeholder="Enter your card number" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
+
+                <label for="expiryDate">Expiry Date:</label>
+                <input type="text" id="expiryDate" placeholder="MM/YY" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
+
+                <label for="cvv">CVV:</label>
+                <input type="text" id="cvv" placeholder="Enter CVV" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px;">
+
+                <button type="submit" style="background: #e8491d; color: #ffffff; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Pay with Card</button>
+            </form>
+
+            <!-- Google Pay Button -->
+            <button id="googlePayButton" style="background: #4285F4; color: #ffffff; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px;">
+                Pay with Google Pay
+            </button>
+
+            <button id="closePaymentModal" style="margin-top: 10px; background: #ccc; color: #333; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Cancel</button>
+        </div>
+    </div>
+    <div id="paymentSuccess" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: #ffffff; padding: 20px; border-radius: 10px; width: 90%; max-width: 400px; text-align: center;">
+            <h2>Payment Successful</h2>
+            <p>Your payment has been processed successfully!</p>
+            <button id="closePaymentSuccess" style="background: #e8491d; color: #ffffff; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Close</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Booking Website. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Predefined data for destinations, names, and availability
+        const travelData = {
+            train: {
+                destinations: ["Delhi", "Mumbai", "Chennai", "Kolkata"],
+                names: ["Rajdhani Express", "Shatabdi Express", "Duronto Express", "Garib Rath"],
+                availability: {
+                    "Rajdhani Express": { dates: ["2025-04-10", "2025-04-15"], times: ["10:00 AM", "3:00 PM"], price: 1500 },
+                    "Shatabdi Express": { dates: ["2025-04-12", "2025-04-18"], times: ["9:00 AM", "2:00 PM"], price: 1200 },
+                    "Duronto Express": { dates: ["2025-04-14", "2025-04-20"], times: ["8:00 AM", "1:00 PM"], price: 1000 },
+                    "Garib Rath": { dates: ["2025-04-16", "2025-04-22"], times: ["11:00 AM", "4:00 PM"], price: 800 }
+                }
+            },
+            bus: {
+                destinations: ["Delhi", "Jaipur", "Agra", "Shimla"],
+                names: ["Volvo AC", "Sleeper Bus", "Luxury Bus", "Express Bus"],
+                availability: {
+                    "Volvo AC": { dates: ["2025-04-11", "2025-04-16"], times: ["10:30 AM", "3:30 PM"], price: 500 },
+                    "Sleeper Bus": { dates: ["2025-04-13", "2025-04-19"], times: ["9:30 AM", "2:30 PM"], price: 400 },
+                    "Luxury Bus": { dates: ["2025-04-15", "2025-04-21"], times: ["8:30 AM", "1:30 PM"], price: 600 },
+                    "Express Bus": { dates: ["2025-04-17", "2025-04-23"], times: ["11:30 AM", "4:30 PM"], price: 300 }
+                }
+            },
+            hotel: {
+                destinations: ["Delhi", "Mumbai", "Goa", "Manali"],
+                names: ["The Taj", "Oberoi", "Holiday Inn", "Radisson"],
+                availability: {
+                    "The Taj": { dates: ["2025-04-10", "2025-04-20"], times: ["Check-in: 12:00 PM"], price: 5000 },
+                    "Oberoi": { dates: ["2025-04-12", "2025-04-22"], times: ["Check-in: 2:00 PM"], price: 4500 },
+                    "Holiday Inn": { dates: ["2025-04-14", "2025-04-24"], times: ["Check-in: 10:00 AM"], price: 4000 },
+                    "Radisson": { dates: ["2025-04-16", "2025-04-26"], times: ["Check-in: 4:00 PM"], price: 3500 }
+                }
+            },
+            restaurant: {
+                destinations: ["Delhi", "Mumbai", "Bangalore", "Hyderabad"],
+                names: ["Barbeque Nation", "Domino's", "KFC", "Pizza Hut"],
+                availability: {
+                    "Barbeque Nation": { dates: ["2025-04-10", "2025-04-15"], times: ["12:00 PM", "7:00 PM"], price: 1000 },
+                    "Domino's": { dates: ["2025-04-12", "2025-04-18"], times: ["1:00 PM", "8:00 PM"], price: 500 },
+                    "KFC": { dates: ["2025-04-14", "2025-04-20"], times: ["11:00 AM", "6:00 PM"], price: 600 },
+                    "Pizza Hut": { dates: ["2025-04-16", "2025-04-22"], times: ["2:00 PM", "9:00 PM"], price: 700 }
+                }
+            }
+        };
+
+        // Populate destinations and names based on travel type
+        document.getElementById("travel-type").addEventListener("change", function () {
+            const travelType = this.value;
+            const destinationSelect = document.getElementById("destination");
+            const nameSelect = document.getElementById("name");
+            const dateSelect = document.getElementById("date");
+            const timeSelect = document.getElementById("time");
+
+            // Clear previous options
+            destinationSelect.innerHTML = '<option value="">Select Destination</option>';
+            nameSelect.innerHTML = '<option value="">Select Name</option>';
+            dateSelect.innerHTML = '<option value="">Select Date</option>';
+            timeSelect.innerHTML = '<option value="">Select Time</option>';
+
+            if (travelType && travelData[travelType]) {
+                // Populate destinations
+                travelData[travelType].destinations.forEach(destination => {
+                    const option = document.createElement("option");
+                    option.value = destination;
+                    option.textContent = destination;
+                    destinationSelect.appendChild(option);
+                });
+
+                // Populate names
+                travelData[travelType].names.forEach(name => {
+                    const option = document.createElement("option");
+                    option.value = name;
+                    option.textContent = name;
+                    nameSelect.appendChild(option);
+                });
+            }
+
+            // Hide boarding point for hotels and restaurants
+            const boardingPointLabel = document.getElementById("boarding-point-label");
+            const boardingPointSelect = document.getElementById("boarding-point");
+            if (travelType === "hotel" || travelType === "restaurant") {
+                boardingPointLabel.style.display = "none";
+                boardingPointSelect.style.display = "none";
+            } else {
+                boardingPointLabel.style.display = "block";
+                boardingPointSelect.style.display = "block";
+            }
+        });
+
+        // Populate dates and times based on selected name
+        document.getElementById("name").addEventListener("change", function () {
+            const travelType = document.getElementById("travel-type").value;
+            const selectedName = this.value;
+            const dateSelect = document.getElementById("date");
+            const timeSelect = document.getElementById("time");
+
+            // Clear previous options
+            dateSelect.innerHTML = '<option value="">Select Date</option>';
+            timeSelect.innerHTML = '<option value="">Select Time</option>';
+
+            if (travelType && selectedName && travelData[travelType].availability[selectedName]) {
+                // Populate dates
+                travelData[travelType].availability[selectedName].dates.forEach(date => {
+                    const option = document.createElement("option");
+                    option.value = date;
+                    option.textContent = date;
+                    dateSelect.appendChild(option);
+                });
+
+                // Populate times
+                travelData[travelType].availability[selectedName].times.forEach(time => {
+                    const option = document.createElement("option");
+                    option.value = time;
+                    option.textContent = time;
+                    timeSelect.appendChild(option);
+                });
+            }
+        });
+
+        // Populate boarding points based on selected destination
+        document.getElementById("destination").addEventListener("change", function () {
+            const travelType = document.getElementById("travel-type").value;
+            const selectedDestination = this.value;
+            const boardingPointSelect = document.getElementById("boarding-point");
+
+            // Clear previous options
+            boardingPointSelect.innerHTML = '<option value="">Select Boarding Point</option>';
+
+            if (travelType && selectedDestination) {
+                // Example boarding points for each destination
+                const boardingPoints = {
+                    Delhi: ["Kashmere Gate", "ISBT", "New Delhi Railway Station"],
+                    Mumbai: ["Dadar", "Borivali", "Mumbai Central"],
+                    Chennai: ["Chennai Central", "Egmore", "Tambaram"],
+                    Kolkata: ["Howrah", "Sealdah", "Esplanade"],
+                    Jaipur: ["Sindhi Camp", "Narayan Singh Circle"],
+                    Agra: ["Idgah Bus Stand", "Agra Cantt"],
+                    Shimla: ["ISBT Shimla", "Old Bus Stand"],
+                    Goa: ["Panaji", "Margao", "Vasco"],
+                    Manali: ["Manali Bus Stand", "Mall Road"],
+                    Hyderabad: ["MGBS", "JBS", "Secunderabad"]
+                };
+
+                // Populate boarding points for the selected destination
+                if (boardingPoints[selectedDestination]) {
+                    boardingPoints[selectedDestination].forEach(point => {
+                        const option = document.createElement("option");
+                        option.value = point;
+                        option.textContent = point;
+                        boardingPointSelect.appendChild(option);
+                    });
+                }
+            }
+        });
+
+        // Check if the user is logged in before allowing booking
+        document.getElementById("form-booking").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Check login state
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn !== 'true') {
+                alert('You must be logged in to confirm a booking. Please log in or register.');
+                window.location.href = 'login.html'; // Redirect to login page
+                return;
+            }
+
+            // Get form values
+            const travelType = document.getElementById("travel-type").value;
+            const destination = document.getElementById("destination").value;
+            const name = document.getElementById("name").value;
+            const date = document.getElementById("date").value;
+            const time = document.getElementById("time").value;
+            const boardingPoint = document.getElementById("boarding-point").value || "N/A"; // Boarding point is not applicable for hotels/restaurants
+            const personName = document.getElementById("person-name").value;
+            const personAge = document.getElementById("person-age").value;
+            const personGender = document.getElementById("person-gender").value;
+
+            // Get price
+            const price = travelData[travelType].availability[name].price;
+
+            // Display ticket confirmation
+            document.getElementById("booking-form").style.display = "none";
+            document.getElementById("ticket").style.display = "block";
+
+            document.getElementById("ticket-travel-type").textContent = travelType;
+            document.getElementById("ticket-destination").textContent = destination;
+            document.getElementById("ticket-name").textContent = name;
+            document.getElementById("ticket-date").textContent = date;
+            document.getElementById("ticket-time").textContent = time;
+            document.getElementById("ticket-boarding-point").textContent = boardingPoint;
+            document.getElementById("ticket-person-name").textContent = personName;
+            document.getElementById("ticket-person-age").textContent = personAge;
+            document.getElementById("ticket-person-gender").textContent = personGender;
+            document.getElementById("ticket-price").textContent = `₹${price}`;
+
+            // Automatically trigger the payment process for hotels and restaurants
+            if (travelType === "hotel" || travelType === "restaurant") {
+                document.getElementById("payNow").click();
+            }
+        });
+
+        // Handle ticket download
+        document.getElementById("downloadTicket").addEventListener("click", function () {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Add ticket details to the PDF
+            doc.setFontSize(16);
+            doc.text("Booking Receipt", 20, 20);
+            doc.setFontSize(12);
+            doc.text(`Travel Type: ${document.getElementById("ticket-travel-type").textContent}`, 20, 40);
+            doc.text(`Destination: ${document.getElementById("ticket-destination").textContent}`, 20, 50);
+            doc.text(`Name: ${document.getElementById("ticket-name").textContent}`, 20, 60);
+            doc.text(`Date: ${document.getElementById("ticket-date").textContent}`, 20, 70);
+            doc.text(`Time: ${document.getElementById("ticket-time").textContent}`, 20, 80);
+            doc.text(`Boarding Point: ${document.getElementById("ticket-boarding-point").textContent}`, 20, 90);
+            doc.text(`Name: ${document.getElementById("ticket-person-name").textContent}`, 20, 100);
+            doc.text(`Age: ${document.getElementById("ticket-person-age").textContent}`, 20, 110);
+            doc.text(`Gender: ${document.getElementById("ticket-person-gender").textContent}`, 20, 120);
+            doc.text(`Price: ${document.getElementById("ticket-price").textContent}`, 20, 130);
+
+            // Save the PDF
+            doc.save("booking_receipt.pdf");
+        });
+
+        // Get the query parameter from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const selectedService = urlParams.get('service');
+
+        // Pre-select the service in the dropdown
+        if (selectedService) {
+            const serviceDropdown = document.getElementById('travel-type');
+            serviceDropdown.value = selectedService;
+        }
+    </script>
+    <script>
+        // Show or hide the boarding point field based on the selected travel type
+        document.getElementById("travel-type").addEventListener("change", function () {
+            const travelType = this.value;
+            const boardingPointLabel = document.querySelector("label[for='boarding-point']");
+            const boardingPointSelect = document.getElementById("boarding-point");
+
+            if (travelType === "hotel" || travelType === "restaurant") {
+                // Hide the boarding point label and dropdown
+                boardingPointLabel.style.display = "none";
+                boardingPointSelect.style.display = "none";
+            } else {
+                // Show the boarding point label and dropdown
+                boardingPointLabel.style.display = "block";
+                boardingPointSelect.style.display = "block";
+            }
+        });
+    </script>
+    <script>
+        document.getElementById("payNow").addEventListener("click", function () {
+            const travelType = document.getElementById("ticket-travel-type").textContent.trim();
+            const destination = document.getElementById("ticket-destination").textContent.trim();
+            const date = document.getElementById("ticket-date").textContent.trim();
+            const time = document.getElementById("ticket-time").textContent.trim();
+            const amount = document.getElementById("ticket-price").textContent.replace("₹", "").trim();
+
+            // Redirect to payment.html with query parameters
+            window.location.href = `payment.html?travelType=${encodeURIComponent(travelType)}&destination=${encodeURIComponent(destination)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}&amount=${encodeURIComponent(amount)}`;
+        });
+
+        document.getElementById("closePaymentModal").addEventListener("click", function () {
+            // Close the payment modal
+            document.getElementById("paymentModal").style.display = "none";
+        });
+
+        document.getElementById("paymentForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Simulate payment processing
+            alert("Processing payment...");
+            setTimeout(() => {
+                alert("Payment successful!");
+
+                // Close the payment modal
+                document.getElementById("paymentModal").style.display = "none";
+
+                // Enable and show the "Download Receipt" button
+                const downloadTicketButton = document.getElementById("downloadTicket");
+                downloadTicketButton.disabled = false;
+                downloadTicketButton.style.display = "block";
+
+                // Show booking confirmation message
+                document.getElementById("bookingMessage").style.display = "block";
+            }, 2000); // Simulate a delay for payment processing
+        });
+
+        document.getElementById("googlePayButton").addEventListener("click", function () {
+            const price = document.getElementById("ticket-price").textContent.replace("₹", ""); // Extract price
+            const googlePayLink = `upi://pay?pa=thakukoshal472@oksbi&pn=Koshal%20Thakur&mc=0000&tid=1234567890&tr=1234567890&tn=Booking%20Payment&am=${price}&cu=INR`;
+
+            // Redirect to Google Pay
+            window.location.href = googlePayLink;
+        });
+
+        document.getElementById("downloadTicket").addEventListener("click", function () {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Add ticket details to the PDF
+            doc.setFontSize(16);
+            doc.text("Booking Receipt", 20, 20);
+            doc.setFontSize(12);
+            doc.text(`Travel Type: ${document.getElementById("ticket-travel-type").textContent}`, 20, 40);
+            doc.text(`Destination: ${document.getElementById("ticket-destination").textContent}`, 20, 50);
+            doc.text(`Name: ${document.getElementById("ticket-name").textContent}`, 20, 60);
+            doc.text(`Date: ${document.getElementById("ticket-date").textContent}`, 20, 70);
+            doc.text(`Time: ${document.getElementById("ticket-time").textContent}`, 20, 80);
+            doc.text(`Boarding Point: ${document.getElementById("ticket-boarding-point").textContent}`, 20, 90);
+            doc.text(`Name: ${document.getElementById("ticket-person-name").textContent}`, 20, 100);
+            doc.text(`Age: ${document.getElementById("ticket-person-age").textContent}`, 20, 110);
+            doc.text(`Gender: ${document.getElementById("ticket-person-gender").textContent}`, 20, 120);
+            doc.text(`Price: ${document.getElementById("ticket-price").textContent}`, 20, 130);
+
+            // Save the PDF
+            doc.save("booking_receipt.pdf");
+        });
+
+        // Handle Card Payment
+        document.getElementById("cardPaymentForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Simulate card payment processing
+            alert("Processing card payment...");
+            setTimeout(() => {
+                alert("Payment successful!");
+
+                // Close the payment modal
+                document.getElementById("paymentModal").style.display = "none";
+
+                // Show booking confirmation message
+                document.getElementById("bookingMessage").style.display = "block";
+
+                // Enable and show the "Download Receipt" button
+                const downloadTicketButton = document.getElementById("downloadTicket");
+                downloadTicketButton.style.display = "block";
+            }, 2000); // Simulate a delay for payment processing
+        });
+
+        // Handle Google Pay Payment
+        document.getElementById("googlePayButton").addEventListener("click", function () {
+            const price = document.getElementById("ticket-price").textContent.replace("₹", ""); // Extract price
+            const googlePayLink = `upi://pay?pa=thakukoshal472@oksbi&pn=Koshal%20Thakur&mc=0000&tid=1234567890&tr=1234567890&tn=Booking%20Payment&am=${price}&cu=INR`;
+
+            // Redirect to Google Pay
+            window.location.href = googlePayLink;
+
+            // Simulate payment confirmation after redirection
+            setTimeout(() => {
+                alert("Payment successful!");
+
+                // Show booking confirmation message
+                document.getElementById("bookingMessage").style.display = "block";
+
+                // Enable and show the "Download Receipt" button
+                const downloadTicketButton = document.getElementById("downloadTicket");
+                downloadTicketButton.style.display = "block";
+            }, 3000); // Simulate a delay for payment processing
+        });
+
+        // Close Payment Modal
+        document.getElementById("closePaymentModal").addEventListener("click", function () {
+            document.getElementById("paymentModal").style.display = "none";
+        });
+
+        let isPaymentDone = false; // Flag to track payment status
+
+        // Handle Google Pay Payment
+        document.getElementById("googlePayButton").addEventListener("click", function () {
+            const price = document.getElementById("ticket-price").textContent.replace("₹", ""); // Extract price
+            const googlePayLink = `upi://pay?pa=thakurkoshal472@oksbi&pn=Koshal%20Thakur&mc=0000&tid=1234567890&tr=1234567890&tn=Booking%20Payment&am=${price}&cu=INR`;
+
+            // Redirect to Google Pay
+            window.location.href = googlePayLink;
+
+            // Simulate payment confirmation after redirection
+            setTimeout(() => {
+                const userConfirmedPayment = confirm("Did you complete the payment in the UPI app?");
+                if (userConfirmedPayment) {
+                    alert("Payment successful!");
+                    isPaymentDone = true; // Mark payment as done
+
+                    // Show booking confirmation message
+                    document.getElementById("bookingMessage").style.display = "block";
+
+                    // Enable and show the "Download Ticket" button
+                    const downloadTicketButton = document.getElementById("downloadTicket");
+                    downloadTicketButton.style.display = "block";
+                } else {
+                    alert("Payment not completed. Please make the payment to book your seat.");
+                }
+            }, 3000); // Simulate a delay for payment processing
+        });
+
+        // Handle Booking Confirmation
+        document.getElementById("payNow").addEventListener("click", function () {
+            if (!isPaymentDone) {
+                alert("Payment is not completed. Please make the payment to confirm your ticket.");
+                return;
+            }
+
+            // Display ticket confirmation
+            document.getElementById("booking-form").style.display = "none";
+            document.getElementById("ticket").style.display = "block";
+
+            // Populate ticket details
+            const travelType = document.getElementById("travel-type").value;
+            const destination = document.getElementById("destination").value;
+            const name = document.getElementById("name").value;
+            const date = document.getElementById("date").value;
+            const time = document.getElementById("time").value;
+            const boardingPoint = document.getElementById("boarding-point").value || "N/A";
+            const personName = document.getElementById("person-name").value;
+            const personAge = document.getElementById("person-age").value;
+            const personGender = document.getElementById("person-gender").value;
+            const price = document.getElementById("ticket-price").textContent;
+
+            document.getElementById("ticket-travel-type").textContent = travelType;
+            document.getElementById("ticket-destination").textContent = destination;
+            document.getElementById("ticket-name").textContent = name;
+            document.getElementById("ticket-date").textContent = date;
+            document.getElementById("ticket-time").textContent = time;
+            document.getElementById("ticket-boarding-point").textContent = boardingPoint;
+            document.getElementById("ticket-person-name").textContent = personName;
+            document.getElementById("ticket-person-age").textContent = personAge;
+            document.getElementById("ticket-person-gender").textContent = personGender;
+            document.getElementById("ticket-price").textContent = price;
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script>
+        document.getElementById("payNow").addEventListener("click", function () {
+            // Redirect to the payment page
+            window.location.href = "payment.html";
+        });
+    </script>
+</body>
+</html>

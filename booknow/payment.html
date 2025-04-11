@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticket Booking Payment</title>
+  <style>
+    :root {
+      --primary-color: #4CAF50; /* Green */
+      --secondary-color: #388E3C; /* Darker Green */
+      --accent-color: #FFC107; /* Amber */
+      --light-color: #F1F8E9; /* Light Green Background */
+      --dark-color: #1B5E20; /* Dark Green */
+      --text-color: #333; /* Neutral Text */
+      --light-text: #fff; /* White Text */
+      --border-color: #ddd; /* Light Border */
+      --success-color: #28a745; /* Success Green */
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--light-color);
+      color: var(--text-color);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .payment-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .payment-header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border-color);
+      animation: slideDown 1s ease-in-out;
+    }
+
+    .payment-header h1 {
+      color: var(--dark-color);
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .payment-header p {
+      color: var(--secondary-color);
+      font-size: 16px;
+    }
+
+    .payment-content {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap; /* Allow wrapping for smaller screens */
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .payment-summary, .payment-methods {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      padding: 25px;
+      flex: 1;
+      min-width: 300px; /* Ensure a minimum width for smaller screens */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .payment-summary:hover, .payment-methods:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .section-title {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: var(--dark-color);
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent-color);
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .total-row {
+      border-top: 2px solid var(--accent-color);
+      margin-top: 15px;
+      padding-top: 15px;
+      font-weight: bold;
+      font-size: 18px;
+      color: var (--secondary-color);
+    }
+
+    .upi-form {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--accent-color);
+      outline: none;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      background-color: var(--primary-color);
+      color: var(--light-text);
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px; /* Space between icon and text */
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-3px);
+    }
+
+    .btn img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .qr-section {
+      text-align: center;
+      margin-top: 30px;
+      border: 2px dashed var(--accent-color);
+      padding: 20px;
+      border-radius: 8px;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .qr-code img {
+      width: 200px;
+      height: 200px;
+    }
+
+    .payment-success {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+      max-width: 500px;
+      margin: 0 auto;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .success-icon {
+      font-size: 60px;
+      color: var(--success-color);
+      margin-bottom: 20px;
+    }
+
+    .payment-success .btn {
+      margin-top: 20px;
+      width: auto;
+      padding: 12px 40px;
+      display: inline-block;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Media Queries for Responsiveness */
+    @media (max-width: 768px) {
+      .payment-content {
+        flex-direction: column; /* Stack items vertically on smaller screens */
+      }
+
+      .payment-summary, .payment-methods {
+        min-width: 100%; /* Take full width on smaller screens */
+      }
+
+      .qr-code img {
+        width: 150px; /* Reduce QR code size for smaller screens */
+        height: 150px;
+      }
+
+      .btn {
+        font-size: 14px; /* Adjust button font size for smaller screens */
+        padding: 10px 20px;
+      }
+
+      .payment-header h1 {
+        font-size: 20px; /* Adjust header font size for smaller screens */
+      }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+</head>
+<body>
+<div class="payment-container">
+  <div class="payment-header">
+    <h1>Complete Your Ticket Payment</h1>
+    <p>Choose your preferred payment method to confirm your ticket booking</p>
+  </div>
+
+  <div class="payment-content">
+    <div class="payment-summary">
+      <h2 class="section-title">Ticket Summary</h2>
+      <div class="detail-row">
+        <span>Travel Type</span>
+        <span id="travel-type">Train</span>
+      </div>
+      <div class="detail-row">
+        <span>Destination</span>
+        <span id="destination">New Delhi</span>
+      </div>
+      <div class="detail-row">
+        <span>Date</span>
+        <span id="travel-date">2025-04-10</span>
+      </div>
+      <div class="detail-row">
+        <span>Time</span>
+        <span id="travel-time">10:00 AM</span>
+      </div>
+      <div class="total-row">
+        <span>Total Amount</span>
+        <span id="total-amount">₹1500 </span>
+      </div>
+    </div>
+
+    <div class="payment-methods">
+      <h2 class="section-title">Payment Method</h2>
+      
+      <!-- UPI Form -->
+      <div class="upi-form">
+        <div class="form-group">
+          <label for="upi-id">Enter UPI ID</label>
+          <input type="text" id="upi-id" class="form-control" placeholder="yourname@upi" />
+        </div>
+        <button class="btn" id="pay-via-upi">Pay via UPI</button>
+      </div>
+
+      <!-- QR Code Section -->
+      <div class="qr-section">
+        <h3>OR Scan QR Code</h3>
+        <div class="qr-code">
+          <img id="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=thakurkoshal472@oksbi&pn=Koshal%20Thakur&am=500&cu=INR" alt="QR Code" />
+        </div>
+        <p class="qr-instructions">Scan this code using any UPI app</p>
+      </div>
+
+      <!-- Payment App Buttons -->
+      <div class="payment-apps">
+        <h3>OR Pay Using</h3>
+        <a href="https://pay.google.com/about/pay-online/" target="_blank" class="btn">
+          <img src="gpay.png" alt="Google Pay" />
+          Google Pay
+        </a>
+        <a href="https://www.phonepe.com/" target="_blank" class="btn">
+          <img src="phonepe.jpg" alt="PhonePe" />
+          PhonePe
+        </a>
+        <a href="https://paytm.com/" target="_blank" class="btn">
+          <img src="paytm.png" alt="Paytm" />
+          Paytm
+        </a>
+      </div>
+
+      <!-- Transaction Verification -->
+      <div class="transaction-verification">
+        <h3>Verify Payment</h3>
+        <p>Please enter your transaction number to confirm the payment:</p>
+        <div class="form-group">
+          <label for="transaction-id">Transaction Number</label>
+          <input type="text" id="transaction-id" class="form-control" placeholder="Enter transaction number" />
+        </div>
+        <button class="btn" id="verify-transaction">Verify Payment</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="payment-timer">
+    <p id="timer-message">You have <span id="timer">30</span> seconds to complete the payment.</p>
+  </div>
+
+  <div id="payment-success" class="payment-success">
+    <div class="success-icon">✓</div>
+    <h2>Payment Successful!</h2>
+    <p>Your ticket has been booked successfully.</p>
+    <button class="btn" id="download-ticket">Download Ticket</button>
+    <a href="index.html" class="btn" id="go-home">Go to Home</a>
+  </div>
+</div>
+
+<script>
+  document.getElementById("pay-via-upi").addEventListener("click", () => {
+    const upiId = document.getElementById("upi-id").value.trim();
+    if (!upiId || !upiId.includes("@")) {
+      alert("Enter a valid UPI ID (e.g. yourname@upi)");
+      return;
+    }
+
+    alert("Redirecting to UPI app for payment...");
+    setTimeout(() => {
+      // Show payment success message
+      document.querySelector(".payment-content").style.display = "none";
+      document.getElementById("payment-success").style.display = "block";
+
+      // Automatically navigate to the ticket download page after 3 seconds
+      setTimeout(() => {
+        window.location.href = "ticket.html"; // Replace with the actual ticket download page
+      }, 3000);
+    }, 3000);
+  });
+
+  document.getElementById("payNow").addEventListener("click", function () {
+    // Redirect to the payment page
+    window.location.href = "payment.html";
+  });
+
+  // Function to update QR code and payment links dynamically
+  function updatePaymentDetails(amount) {
+    const upiBaseLink = `upi://pay?pa=thakurkoshal472@oksbi&pn=Koshal%20Thakur&am=${amount}&cu=INR`;
+
+    // Update QR code
+    const qrImg = document.getElementById("qr-img");
+    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiBaseLink)}`;
+  }
+
+  // Retrieve the amount from the URL query parameter
+  const urlParams = new URLSearchParams(window.location.search);
+  const amount = urlParams.get("amount");
+
+  // Display the amount in the total amount section
+  if (amount) {
+    document.getElementById("total-amount").textContent = `₹${amount}`;
+
+    // Update the QR code with the correct amount
+    const upiBaseLink = `upi://pay?pa=thakurkoshal472@oksbi&pn=Koshal%20Thakur&am=${amount}&cu=INR`;
+    const qrImg = document.getElementById("qr-img");
+    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiBaseLink)}`;
+  }
+
+  // Get the total amount dynamically (example: ₹500)
+  const totalAmount = document.getElementById("total-amount").textContent.replace("₹", "").trim();
+  updatePaymentDetails(totalAmount);
+
+  let isPaymentVerified = false; // Flag to track if payment is verified
+
+  // Handle transaction verification
+  document.getElementById("verify-transaction").addEventListener("click", () => {
+    const transactionId = document.getElementById("transaction-id").value.trim();
+
+    if (!transactionId) {
+      alert("Please enter a valid transaction number.");
+      return;
+    }
+
+    // Simulate transaction verification
+    setTimeout(() => {
+      alert("Transaction verified successfully!");
+      isPaymentVerified = true; // Mark payment as verified
+      document.querySelector(".transaction-verification").style.display = "none";
+      document.querySelector(".payment-content").style.display = "none";
+      document.getElementById("payment-success").style.display = "block";
+    }, 2000); // Simulate a delay for verification
+  });
+
+  // Handle ticket download
+  document.getElementById("download-ticket").addEventListener("click", () => {
+    if (!isPaymentVerified) {
+      alert("Please verify your payment before downloading the ticket.");
+      return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Add ticket details to the PDF
+    doc.setFontSize(16);
+    doc.text("Ticket Confirmation", 20, 20);
+    doc.setFontSize(12);
+    doc.text(`Travel Type: ${document.getElementById("travel-type").textContent}`, 20, 40);
+    doc.text(`Destination: ${document.getElementById("destination").textContent}`, 20, 50);
+    doc.text(`Date: ${document.getElementById("travel-date").textContent}`, 20, 60);
+    doc.text(`Time: ${document.getElementById("travel-time").textContent}`, 20, 70);
+    doc.text(`Total Amount: ${document.getElementById("total-amount").textContent}`, 20, 80);
+
+    // Save the PDF
+    doc.save("ticket.pdf");
+
+    // Redirect to the home page after downloading the ticket
+    setTimeout(() => {
+      window.location.href = "index.html"; // Replace with the actual home page URL
+    }, 2000); // Delay of 2 seconds before redirecting
+  });
+
+  // Retrieve ticket details from the URL query parameters
+  const travelType = urlParams.get("travelType");
+  const destination = urlParams.get("destination");
+  const date = urlParams.get("date");
+  const time = urlParams.get("time");
+
+  // Display the ticket details in the summary section
+  if (travelType && destination && date && time && amount) {
+    document.getElementById("travel-type").textContent = travelType;
+    document.getElementById("destination").textContent = destination;
+    document.getElementById("travel-date").textContent = date;
+    document.getElementById("travel-time").textContent = time;
+    document.getElementById("total-amount").textContent = `₹${amount}`;
+
+    // Update the QR code with the correct amount
+    const upiBaseLink = `upi://pay?pa=thakurkoshal472@oksbi&pn=Koshal%20Thakur&am=${amount}&cu=INR`;
+    const qrImg = document.getElementById("qr-img");
+    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiBaseLink)}`;
+  }
+
+  let countdown = 30; // Set the countdown time in seconds
+  const timerElement = document.getElementById("timer");
+  const timerMessage = document.getElementById("timer-message");
+
+  // Start the countdown timer
+  const timerInterval = setInterval(() => {
+    countdown--;
+    timerElement.textContent = countdown;
+
+    if (countdown <= 0) {
+      clearInterval(timerInterval); // Stop the timer
+      alert("Payment time expired. Redirecting back...");
+      window.location.href = "booking.html"; // Redirect to the previous page or booking page
+    }
+  }, 1000); // Update every second
+
+  // Stop the timer if payment is verified
+  document.getElementById("verify-transaction").addEventListener("click", () => {
+    const transactionId = document.getElementById("transaction-id").value.trim();
+
+    if (!transactionId) {
+      alert("Please enter a valid transaction number.");
+      return;
+    }
+
+    // Simulate transaction verification
+    setTimeout(() => {
+      alert("Transaction verified successfully!");
+      clearInterval(timerInterval); // Stop the timer
+      document.querySelector(".transaction-verification").style.display = "none";
+      document.querySelector(".payment-content").style.display = "none";
+      document.getElementById("payment-success").style.display = "block";
+    }, 2000); // Simulate a delay for verification
+  });
+</script>
+</body>
+</html>
